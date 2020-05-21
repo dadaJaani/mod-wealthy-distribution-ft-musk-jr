@@ -20,15 +20,52 @@
  *          This is the main method used to run the simulation program.
  *
  */
-import java.util.*;
-import java.io.File;
+import java.util.*; // Import ArrayList
+import java.io.*;   // Import FileWriter
 
 public class Main {
 
+    public static void createCSV(String heading1, String heading2, String heading3, List<List<String>> data) {
+        try {
+            FileWriter csvWriter = new FileWriter("fileName.csv");
+            csvWriter.append(heading1);
+            csvWriter.append(",");
+            csvWriter.append(heading2);
+            csvWriter.append(",");
+            csvWriter.append(heading3);
+            csvWriter.append("\n");
+
+            for (List<String> rowData : data) {
+                csvWriter.append(String.join(",", rowData));
+                csvWriter.append("\n");
+            }
+
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (Exception e) {
+
+        }
+
+
+
+    }
     
 
     public static void main(String [] args) throws InterruptedException {
-    
+        List<List<String>> rows = Arrays.asList(
+            Arrays.asList("Jack", "Sailor", "0340138128"),
+            Arrays.asList("Bond", "Spy", "0467263982"),
+            Arrays.asList("Harry", "Wizard", "11111100232")
+        );
+
+        createCSV("Name", "Occupation", "Phone Number", rows);
+
+
+        
+        
+        
+
+       
     }
 
 }
