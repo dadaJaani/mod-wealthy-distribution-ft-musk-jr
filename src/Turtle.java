@@ -81,12 +81,12 @@ public class Turtle extends Thread{
     // =========================================================================
     Turtle (int vision, int lifeExpectancy, int metabolism, int ticksToNextEat, Field field) {
         // Initialising all the properties here.
-        this.currLocation   = new Patch();
+        this.currLocation   = null;
         this.vision         = vision; 
         this.currWealth     = 0;
         this.lifeExpectancy = lifeExpectancy;
         this.age            = 0;
-        this.metabolism     = metabolism
+        this.metabolism     = metabolism;
         this.ticksToNextEat = ticksToNextEat;
         this.field          = field;
     }
@@ -102,7 +102,7 @@ public class Turtle extends Thread{
             moveToLocation();
 
             // Procedure 2: Eat  
-            harvest(this.currLocation);
+            harvest( );
 
             // Procedure 3: Age 
 
@@ -131,7 +131,7 @@ public class Turtle extends Thread{
     // =========================================================================
     // Method: To produceOffspring.
     // =========================================================================
-    public Turtle produceOffspring() {
+    public void produceOffspring() { //This must return Turtle. Kept it to void for now for compilation.
         // Hmmmm
 
     }

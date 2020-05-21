@@ -4,7 +4,7 @@
  *  The top-level component of the questing knights simulator.
  *
  *  ============================================================================
- *  @authorName     : Waqas Rehmani
+ *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
  *  @studentNumber  : 1035514
  *  ============================================================================
  *
@@ -20,11 +20,15 @@
  *          This is the main method used to run the simulation program.
  *
  */
+import java.util.*;
+import java.io.File;
 
 public class Main {
 
-    public static void main(String [] args) throws InterruptedException {
+    
 
-        
+    public static void main(String [] args) throws InterruptedException {
+    
     }
+
 }

@@ -37,7 +37,7 @@
  */
 
 
-public class Turtle extends Thread{
+public class Patch extends Thread{
     // =========================================================================
     // Class Properties
     // =========================================================================
@@ -49,11 +49,11 @@ public class Turtle extends Thread{
     // Constructor: Creates a new turtle for the given vision, lifeExpectancy
     // and metabolism.
     // =========================================================================
-    Turtle (int maxGrain, Field field) {
+    Patch (int maxGrain, Field field) {
         // Initialising all the properties here.
         this.nGrain   = 0;
-        this.maxGrain = 0;
-        this.field    = 0; 
+        this.maxGrain = maxGrain;
+        this.field    = field; 
     }
 
     // =========================================================================
@@ -63,6 +63,8 @@ public class Turtle extends Thread{
         while (!isInterrupted()) {
             // Procedure 1: Grow 
             grow();
+            
+            
  
             // Procedure 2: Die
         }

@@ -28,6 +28,6 @@ class Params {
         return (int) Math.max(0.0, rnd.nextGaussian() * 
         		LIFE_EXPECTENCY / 6 + LIFE_EXPECTENCY);
     }
- 
+
 
 }
