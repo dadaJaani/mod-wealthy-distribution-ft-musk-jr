@@ -61,14 +61,22 @@ public class Patch extends Thread {
     // =========================================================================
     public void run() {
         while (!isInterrupted()) {
-            // Procedure 1: Grow 
-            this.grow();
+            try {
+                // Procedure 1: Grow 
+                this.grow();
+    
+                // Procedure 2: Harvest
+                // do we need this method? 
+                // i.e. shouldn't this be called by turtle?
+                this.field.harvest(this);
+    
+            } catch (InterruptedException e) {
+                this.interrupt();
+            }
 
-            // Procedure 2: Harvest
-            // do we need this method? 
-            // i.e. shouldn't this be called by turtle?
-            this.field.harvest(this);
         }
+        
+
     }
 
     // =========================================================================
@@ -85,6 +93,7 @@ public class Patch extends Thread {
  
     // =========================================================================
     // Method: The patch is harvested by a turtle.
+    // not sure we need this (see above)
     // =========================================================================
     public void harvest() {
         this.nGrain = 0;

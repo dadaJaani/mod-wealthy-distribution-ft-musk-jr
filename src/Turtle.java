@@ -98,18 +98,24 @@ public class Turtle extends Thread {
          
 
         while (!isInterrupted()) {
-            // Procedure 1: Move 
-            this.field.moveToLocation(this);
+            try{
+                // Procedure 1: Move 
+                this.field.moveToLocation(this);
+    
+                // Procedure 2: Eat
+                this.field.harvest(this);
+    
+                // Procedure 3: Age 
+                this.age();
+    
+                // Procedure 4: Die
+                this.die();
 
-            // Procedure 2: Eat
-            this.field.harvest(this);
-
-            // Procedure 3: Age 
-            this.age();
-
-            // Procedure 4: Die
-            this.die();
-        }
+            } catch (InterruptedException e) {
+                this.interrupt();
+            }
+        
+    }
     }
 
     // =========================================================================
