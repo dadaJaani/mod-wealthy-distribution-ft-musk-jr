@@ -25,6 +25,19 @@ import java.io.*;   // Import FileWriter
 
 public class Main {
 
+    public static void main(String [] args) throws InterruptedException {
+
+        /*
+        List<List<String>> rows = Arrays.asList(
+            Arrays.asList("Jack", "Sailor", "0340138128"),
+            Arrays.asList("Bond", "Spy", "0467263982"),
+            Arrays.asList("Harry", "Wizard", "11111100232")
+        );
+
+        createCSV("Name", "Occupation", "Phone Number", rows); 
+        */
+    }
+
     public static void createCSV(String heading1, String heading2, String heading3, List<List<String>> data) {
         try {
             FileWriter csvWriter = new FileWriter("fileName.csv");
@@ -45,27 +58,7 @@ public class Main {
         } catch (Exception e) {
 
         }
-
-
-
     }
     
-
-    public static void main(String [] args) throws InterruptedException {
-        List<List<String>> rows = Arrays.asList(
-            Arrays.asList("Jack", "Sailor", "0340138128"),
-            Arrays.asList("Bond", "Spy", "0467263982"),
-            Arrays.asList("Harry", "Wizard", "11111100232")
-        );
-
-        createCSV("Name", "Occupation", "Phone Number", rows);
-
-
-        
-        
-        
-
-       
-    }
 
 }
