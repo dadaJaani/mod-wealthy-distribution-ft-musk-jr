@@ -5,7 +5,7 @@
  *
  *  ============================================================================
  *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
- *  @studentNumber  : 1035514, 835808
+ *  @studentNumber  : 1035514, 835808, 836748
  *  ============================================================================
  *
  *  It is responsible for:
@@ -29,21 +29,24 @@ public class Main {
 
         Field field = new Field("field", Params.FIELD_HEIGHT, Params.FIELD_WIDTH);
         Turtle[] turtles = new Turtle[Params.NUM_TURTLES];
-
+        
         for (int i = 0; i < Params.NUM_TURTLES; i++) {
             int metabolism = Params.getRandomMetabolism();
             int wealth = Params.getRandomWealth(metabolism);
-            turtles[i] = new Turtle(Params.getRandomVision(), wealth, 
-                Params.getRandomLifeExpectancy(), metabolism, field);
+            int vision = Params.getRandomVision();
+            int lifeExpectancy = Params.getRandomLifeExpectancy();
+            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, field);
             turtles[i].start();
-
+            
             // 1. Move to a random starting patch
             // 2. Randomly assign an age between 0 and life-expectancy
         }
+        
+        System.out.println("here yeeeeeet");
 
-        Patch[] patches = new Patch[Params.FIELD_WIDTH][Params.FIELD_HEIGHT];
+        Patch[][] patches = new Patch[Params.FIELD_WIDTH][Params.FIELD_HEIGHT];
 
-        for (i = 0; i < Params.FIELD_WIDTH; i++) {
+        for (int i = 0; i < Params.FIELD_WIDTH; i++) {
             for (int j = 0; j < Params.FIELD_HEIGHT; j++) {
                 int maxGrain = 0;
                 int nGrain = 0;
@@ -60,16 +63,17 @@ public class Main {
 
                 // This is probably best done not here, initialise patch variables elsewhere
 
-                patches[i][j] = new Patch(int nGrain, int maxGrain, field);
+                patches[i][j] = new Patch(nGrain, maxGrain, field);
+                System.out.println(patches[i][j]);
                 patches[i][j].start();
             }
         }
 
-        for (i = 0; i < Params.NUM_TURTLES; i++) {
+        for (int i = 0; i < Params.NUM_TURTLES; i++) {
             turtles[i].join();
         }
 
-        for (i = 0; i < Params.FIELD_WIDTH; i++) {
+        for (int i = 0; i < Params.FIELD_WIDTH; i++) {
             for (int j = 0; j < Params.FIELD_HEIGHT; j++) {
                 patches[i][j].join();
             }

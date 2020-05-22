@@ -6,7 +6,7 @@
  *
  *  ============================================================================
  *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
- *  @studentNumber  : 1035514, 835808
+ *  @studentNumber  : 1035514, 835808, 836748
  *  ============================================================================
  *
  *  A Turtle has the following procedures:
@@ -55,7 +55,8 @@
  *
  *      3. harvest(Patch):
  *          This is a public get method to access the Knight's Quest.
- *
+ *          (could implement harvest(location) instead?)
+ * 
  *      4. produceOffspring():
  *          This public method is used to check if the Knight has acquired a new
  *          Quest the current Quest for the Knight.
