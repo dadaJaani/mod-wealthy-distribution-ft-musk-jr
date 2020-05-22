@@ -6,7 +6,7 @@
  *
  *  ============================================================================
  *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
- *  @studentNumber  : 1035514, , ,
+ *  @studentNumber  : 1035514, 835808
  *  ============================================================================
  *
  *  ============================================================================
@@ -41,8 +41,7 @@ public class Field {
     private int    height, width, wealthiestTurtleBalance, poorestTurtleBalance; 
 
     // =========================================================================
-    // Constructor: Creates a new hall for the given name, agendaNew and
-    // agendaComplete.
+    // Constructor: Creates a new field for the given name, height and width
     // =========================================================================
     Field (String name, int height, int width) {
         // Initialising all the properties here.

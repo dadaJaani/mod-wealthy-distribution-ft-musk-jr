@@ -6,7 +6,7 @@
  *
  *  ============================================================================
  *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
- *  @studentNumber  : 1035514
+ *  @studentNumber  : 1035514, 835808
  *  ============================================================================
  *
  *  A Turtle has the following procedures:
@@ -66,28 +66,27 @@
  */
 
 
-public class Turtle extends Thread{
+public class Turtle extends Thread {
     // =========================================================================
     // Class Properties
     // =========================================================================
     private Patch currLocation;
-    private int vision, currWealth, lifeExpectancy, age, metabolism, ticksToNextEat;
+    private int vision, currWealth, lifeExpectancy, age, metabolism;
     private Field field;
  
 
     // =========================================================================
-    // Constructor: Creates a new turtle for the given vision, lifeExpectancy
+    // Constructor: Creates a new turtle for the given vision, currWealth, lifeExpectancy
     // and metabolism.
     // =========================================================================
-    Turtle (int vision, int lifeExpectancy, int metabolism, int ticksToNextEat, Field field) {
+    Turtle(int vision, int currWealth, int lifeExpectancy, int metabolism, Field field) {
         // Initialising all the properties here.
         this.currLocation   = null;
         this.vision         = vision; 
-        this.currWealth     = 0;
+        this.currWealth     = currWealth;
         this.lifeExpectancy = lifeExpectancy;
         this.age            = 0;
         this.metabolism     = metabolism;
-        this.ticksToNextEat = ticksToNextEat;
         this.field          = field;
     }
 
@@ -102,9 +101,10 @@ public class Turtle extends Thread{
             moveToLocation();
 
             // Procedure 2: Eat  
-            harvest( );
+            harvest();
 
             // Procedure 3: Age 
+            age();
 
             // Procedure 4: Die
 
@@ -116,7 +116,6 @@ public class Turtle extends Thread{
     // =========================================================================
     public void moveToLocation() { 
         // I guess this updates the currLocation
-
     }
 
     // =========================================================================
@@ -125,7 +124,13 @@ public class Turtle extends Thread{
     public void harvest() {
         // Turtle harvests the currLocation?
         // and then updates wealth
+    }
 
+    // =========================================================================
+    // Method: To age.
+    // =========================================================================
+    public void age() {
+        this.age++;
     }
 
     // =========================================================================
@@ -133,7 +138,6 @@ public class Turtle extends Thread{
     // =========================================================================
     public void produceOffspring() { //This must return Turtle. Kept it to void for now for compilation.
         // Hmmmm
-
     }
 
     // =========================================================================

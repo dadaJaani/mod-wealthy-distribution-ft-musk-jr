@@ -1,11 +1,11 @@
 /**
  *  Params.java
  *
- *  Parameters for the questing knights simulator.
+ *  Parameters for the wealth distribution simulator.
  *
  *  ============================================================================
- *  @authorName     : Waqas Rehmani
- *  @studentNumber  : 1035514
+ *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
+ *  @studentNumber  : 1035514, 835808
  *  ============================================================================
  *
  */
@@ -47,14 +47,11 @@ class Params {
     // The amount of grain grown per growth tick
     static final int NUM_GRAIN_GROWN = 4;
 
+    // The maximum amount of grain per patch
+    static final int MAX_GRAIN = 50;
+
     // The maximum starting wealth
     static final int MAX_WEALTH = 50;
-    
-    // Generate a random life expectancy
-    static int getLifeExpectancy() {
-        return (int) (MIN_LIFE_EXPECTANCY + 
-            (Math.random() * (MAX_LIFE_EXPECTANCY - MIN_LIFE_EXPECTANCY)));
-    }
 
     // Generate a random life expectancy
     static int getRandomLifeExpectancy() {
@@ -72,7 +69,13 @@ class Params {
         return (int) (1 + (Math.random() * MAX_VISION));
     }
 
+    // Generate a random wealth
     static int getRandomWealth(int metabolism) {
         return (int) (metabolism + (Math.random() * MAX_WEALTH));
+    }
+
+    // Generate an integer between 1 and 100
+    static int getRandomPercentage() {
+        return (int) (1 + (Math.random() * MAX_WEALTH));
     }
 }

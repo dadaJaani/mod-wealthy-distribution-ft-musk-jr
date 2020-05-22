@@ -6,7 +6,7 @@
  *
  *  ============================================================================
  *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
- *  @studentNumber  : 1035514
+ *  @studentNumber  : 1035514, 835808
  *  ============================================================================
  *
  *  A Patch has the following procedures:
@@ -26,7 +26,7 @@
  *  ============================================================================
  *  Detailed description of Methods:
  *  ============================================================================
- *  This class has seven methods:
+ *  This class has two methods:
  *      1. run():
  *          This is the run method to run the process. It follows the procedure
  *          stated above.
@@ -37,7 +37,7 @@
  */
 
 
-public class Patch extends Thread{
+public class Patch extends Thread {
     // =========================================================================
     // Class Properties
     // =========================================================================
@@ -49,9 +49,9 @@ public class Patch extends Thread{
     // Constructor: Creates a new turtle for the given vision, lifeExpectancy
     // and metabolism.
     // =========================================================================
-    Patch (int maxGrain, Field field) {
+    Patch (int nGrain, int maxGrain, Field field) {
         // Initialising all the properties here.
-        this.nGrain   = 0;
+        this.nGrain   = nGrain;
         this.maxGrain = maxGrain;
         this.field    = field; 
     }
@@ -63,10 +63,9 @@ public class Patch extends Thread{
         while (!isInterrupted()) {
             // Procedure 1: Grow 
             grow();
-            
-            
- 
-            // Procedure 2: Die
+
+            // Procedure 2: Harvest
+            harvest();
         }
     }
 
@@ -75,16 +74,19 @@ public class Patch extends Thread{
     // =========================================================================
     public void grow() { 
         // I guess this updates the currLocation
-        if (this.nGrain < this.maxGrain) { // ??
-            this.nGrain ++; 
+        if (this.nGrain < this.maxGrain) {
+            this.nGrain += Params.NUM_GRAIN_GROWN; 
+            if (this.nGrain > this.maxGrain) {
+                this.nGrain = this.maxGrain;
+            }
         }
     }
  
     // =========================================================================
-    // Method: To die.
+    // Method: The patch is harvested by a turtle.
     // =========================================================================
-    public void die() {
-        this.nGrain = 0; // ??
+    public void harvest() {
+        this.nGrain = 0;
     }
 
 }
