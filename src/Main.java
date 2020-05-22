@@ -42,7 +42,6 @@ public class Main {
             // 2. Randomly assign an age between 0 and life-expectancy
         }
         
-        System.out.println("here yeeeeeet");
 
         Patch[][] patches = new Patch[Params.FIELD_WIDTH][Params.FIELD_HEIGHT];
 
@@ -64,7 +63,6 @@ public class Main {
                 // This is probably best done not here, initialise patch variables elsewhere
 
                 patches[i][j] = new Patch(nGrain, maxGrain, field);
-                System.out.println(patches[i][j]);
                 patches[i][j].start();
             }
         }

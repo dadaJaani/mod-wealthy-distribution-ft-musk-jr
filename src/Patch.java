@@ -46,8 +46,8 @@ public class Patch extends Thread {
  
 
     // =========================================================================
-    // Constructor: Creates a new turtle for the given vision, lifeExpectancy
-    // and metabolism.
+    // Constructor: Creates a new patch for the given values for grain
+    // and max grain.
     // =========================================================================
     Patch (int nGrain, int maxGrain, Field field) {
         // Initialising all the properties here.
@@ -62,18 +62,19 @@ public class Patch extends Thread {
     public void run() {
         while (!isInterrupted()) {
             // Procedure 1: Grow 
-            grow();
+            this.grow();
 
             // Procedure 2: Harvest
-            harvest();
+            // do we need this method? 
+            // i.e. shouldn't this be called by turtle?
+            this.field.harvest(this);
         }
     }
 
     // =========================================================================
-    // Method: To move to a new location.
+    // Method: Replenish the amount of grain on the patch
     // =========================================================================
     public void grow() { 
-        // I guess this updates the currLocation
         if (this.nGrain < this.maxGrain) {
             this.nGrain += Params.NUM_GRAIN_GROWN; 
             if (this.nGrain > this.maxGrain) {
@@ -87,6 +88,13 @@ public class Patch extends Thread {
     // =========================================================================
     public void harvest() {
         this.nGrain = 0;
+    }
+
+    // =========================================================================
+    // Method: Getter for nGrain.
+    // =========================================================================
+    public int getCurrGrain() {
+        return this.nGrain;
     }
 
 }

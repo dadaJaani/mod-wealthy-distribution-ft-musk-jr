@@ -48,10 +48,41 @@ public class Field {
         this.name                    = name;
         this.height                  = height;
         this.width                   = width;
-        this.wealthiestTurtleBalance = 0;
+        this.wealthiestTurtleBalance = 0; // what do we do with this?
         this.poorestTurtleBalance    = 0;
     }
 
-   
+   // handle turtle movement
+   synchronized void moveToLocation(Turtle turtle) throws InterruptedException {
+        // perform checks
+        // has this  turtle already moved in this "cycle"?
+        // has the turtle got energy/metabolism to make this move?
+        
+        // while(cond){
+        //     wait();
+        // }
+
+        // 1. use turtle.location & turtle.vision to find patch with the highest grain within their sight
+        // 2. set direction
+        // 3. move turtle one square (probably involves calling a setter on the turtle object)
+        // (also might involve updating some data structure containing turtle locations? fuk idk)
+
+        notifyAll();
+    }
+
+    // handle grain consumption
+   synchronized void harvest(Turtle turtle) throws InterruptedException {
+        // perform checks:
+        // has this turtle already harvested in this "cycle"?
+        // has the turtle got energy/metabolism to perform this action?
+        
+        // while(cond){
+        //     wait();
+        // }
+        
+        // 1. use turtle.location to find patch
+        // 2. update turtle.currWealth & patch.nGrain
+        notifyAll();
+    }
 
 }

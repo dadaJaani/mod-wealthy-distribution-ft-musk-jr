@@ -1,3 +1,5 @@
+import jdk.internal.agent.resources.agent;
+
 /**
  *  Turtle.java
  *
@@ -74,11 +76,9 @@ public class Turtle extends Thread {
     private Patch currLocation;
     private int vision, currWealth, lifeExpectancy, age, metabolism;
     private Field field;
- 
-
     // =========================================================================
-    // Constructor: Creates a new turtle for the given vision, currWealth, lifeExpectancy
-    // and metabolism.
+    // Constructor: Creates a new turtle for the given vision, currWealth, 
+    // lifeExpectancy, and metabolism.
     // =========================================================================
     Turtle(int vision, int currWealth, int lifeExpectancy, int metabolism, Field field) {
         // Initialising all the properties here.
@@ -99,21 +99,22 @@ public class Turtle extends Thread {
 
         while (!isInterrupted()) {
             // Procedure 1: Move 
-            moveToLocation();
+            this.field.moveToLocation(this);
 
-            // Procedure 2: Eat  
-            harvest();
+            // Procedure 2: Eat
+            this.field.harvest(this);
 
             // Procedure 3: Age 
-            age();
+            this.age();
 
             // Procedure 4: Die
-
+            this.die();
         }
     }
 
     // =========================================================================
     // Method: To move to a new location.
+    // (should this function live in the monitor, Field.java?)
     // =========================================================================
     public void moveToLocation() { 
         // I guess this updates the currLocation
@@ -121,6 +122,7 @@ public class Turtle extends Thread {
 
     // =========================================================================
     // Method: To harvest the currentPatch.
+    // (should this function live in the monitor, Field.java?)
     // =========================================================================
     public void harvest() {
         // Turtle harvests the currLocation?
@@ -139,6 +141,7 @@ public class Turtle extends Thread {
     // =========================================================================
     public void produceOffspring() { //This must return Turtle. Kept it to void for now for compilation.
         // Hmmmm
+        // Big hmmmmmmmmmmm
     }
 
     // =========================================================================
@@ -146,6 +149,9 @@ public class Turtle extends Thread {
     // =========================================================================
     public void die() {
         // how to die?
+
+        // could use a flag as described here, named "alive" or sth:
+        // https://stackoverflow.com/questions/2491588/how-a-thread-should-close-itself-in-java
     }
 
 }
