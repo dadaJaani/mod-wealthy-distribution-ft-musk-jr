@@ -93,8 +93,8 @@ public class Main {
 
     public static void initialisePatches(Patch[][] patches, Field field) {
         // Initialise patches to be empty with 0 maxGrain, unless they are 'rich'
-        int maxGrain = 0;
-        int nGrain = 0;
+        int maxGrain;
+        int nGrain;
         for (int i = 0; i < Params.FIELD_HEIGHT; i++) {
             for (int j = 0; j < Params.FIELD_WIDTH; j++) {
                 maxGrain = nGrain = 0;
@@ -129,14 +129,14 @@ public class Main {
                 printPatch(patches[row][col], row+1, col+1);
             }
         }
-        // 1. Give all 8 neighbouring patches of patches with grain on them, 1/8th of 25% of the grain present on the initial patch,
-        //          the initial patch keeps any grain not allocated to neighbouring patches (sum = 200%), 
-        //          we re-max all 'rich' patches at start of every cycle SEE: http://ccl.northwestern.edu/netlogo/docs/dict/diffuse.html
-        // 2. Do this 5 times 
-        // 3. Do this a further 10 times, except we don't replenish the 'rich' patches 
-        // 4. After, round all grain values for each patch down to nearest int, and set max for that patch to be that value
     }
 
+    // 1. Give all 8 neighbouring patches of patches with grain on them, 1/8th of 25% of the grain present on the initial patch,
+    //          the initial patch keeps any grain not allocated to neighbouring patches (sum = 200%),
+    //          we re-max all 'rich' patches at start of every cycle SEE: http://ccl.northwestern.edu/netlogo/docs/dict/diffuse.html
+    // 2. Do this 5 times
+    // 3. Do this a further 10 times, except we don't replenish the 'rich' patches
+    // 4. After, round all grain values for each patch down to nearest int, and set max for that patch to be that value
     public static void diffusePatches(Patch[][] patches) {
         // We use a separate grid so the patches aren't updated until ALL have been processed for diffusion
         double[][] transitionGrid = new double[Params.FIELD_HEIGHT][Params.FIELD_WIDTH];

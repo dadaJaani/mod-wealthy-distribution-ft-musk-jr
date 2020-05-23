@@ -87,4 +87,8 @@ class Params {
     static int getRandomPercentage() {
         return (int) (1 + (Math.random() * 100.0));
     }
+
+    static int getRandomRow() { return (int) (Math.random() * FIELD_WIDTH); }
+
+    static int getRandomCol() { return (int) (Math.random() * FIELD_HEIGHT); }
 }
