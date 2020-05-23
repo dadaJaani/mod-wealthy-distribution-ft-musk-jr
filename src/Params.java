@@ -16,6 +16,15 @@ import java.lang.Math;
 class Params {
 	
     static Random rnd = new Random();
+
+    // First diffusion round
+    static final int N_FIRST_DIFFUSIONS = 5;
+
+    // Second diffusion round
+    static final int N_SECOND_DIFFUSIONS = 10;
+
+    // Diffusion rate
+    static final double DIFFUSION_RATE = 0.25;
     
     // The height of the field in patches
     static final int FIELD_HEIGHT = 51;
@@ -76,6 +85,6 @@ class Params {
 
     // Generate an integer between 1 and 100
     static int getRandomPercentage() {
-        return (int) (1 + (Math.random() * MAX_WEALTH));
+        return (int) (1 + (Math.random() * 100.0));
     }
 }

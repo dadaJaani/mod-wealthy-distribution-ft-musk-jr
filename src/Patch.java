@@ -41,7 +41,8 @@ public class Patch extends Thread {
     // =========================================================================
     // Class Properties
     // =========================================================================
-    private int nGrain, maxGrain;
+    private double nGrain;
+    private int maxGrain;
     private Field field;
  
 
@@ -49,7 +50,7 @@ public class Patch extends Thread {
     // Constructor: Creates a new patch for the given values for grain
     // and max grain.
     // =========================================================================
-    Patch (int nGrain, int maxGrain, Field field) {
+    Patch (double nGrain, int maxGrain, Field field) {
         // Initialising all the properties here.
         this.nGrain   = nGrain;
         this.maxGrain = maxGrain;
@@ -61,18 +62,12 @@ public class Patch extends Thread {
     // =========================================================================
     public void run() {
         while (!isInterrupted()) {
-            try {
-                // Procedure 1: Grow 
-                this.grow();
-    
-                // Procedure 2: Harvest
-                // do we need this method? 
-                // i.e. shouldn't this be called by turtle?
-                this.field.harvest(this);
-    
-            } catch (InterruptedException e) {
-                this.interrupt();
-            }
+            // Procedure 1: Grow
+            this.grow();
+
+            // Procedure 2: Harvest
+            // do we need this method?
+            // i.e. shouldn't this be called by turtle? Yes
 
         }
         
@@ -100,10 +95,22 @@ public class Patch extends Thread {
     }
 
     // =========================================================================
-    // Method: Getter for nGrain.
+    // Getters and Setters
     // =========================================================================
-    public int getCurrGrain() {
+
+    public double getCurrGrain() {
         return this.nGrain;
     }
 
+    public int getMaxGrain() {
+        return this.maxGrain;
+    }
+
+    public void setCurrGrain(double nGrain) {
+        this.nGrain = nGrain;
+    }
+
+    public void setMaxGrain(int maxGrain) {
+        this.maxGrain = maxGrain;
+    }
 }
