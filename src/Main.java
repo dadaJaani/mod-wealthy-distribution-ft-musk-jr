@@ -70,7 +70,7 @@ public class Main {
     }
 
     public static void initialisePatches(Patch[][] patches) {
-        // Initialise patches to be empty with 0 maxGrain, unless they are 'rich'
+        // Initialise patches to be empty with 0 maxin, unless they are 'rich'
         int maxGrain;
         int nGrain;
         for (int i = 0; i < Params.FIELD_HEIGHT; i++) {
@@ -110,22 +110,29 @@ public class Main {
 
     public static void initialiseTurtles(Turtle[] turtles, Patch[][] patches) {
         for (int i = 0; i < Params.NUM_TURTLES; i++) {
-            int metabolism = Params.getRandomMetabolism();
-            int wealth = Params.getRandomWealth(metabolism);
-
-            int vision = Params.getRandomVision();
-            int lifeExpectancy = Params.getRandomLifeExpectancy();
-            int age = Params.getRandomAge(lifeExpectancy);
-
+            
+            // set turtle initial location
             int patchRow = Params.getRandomRow();
             int patchWidth = Params.getRandomCol();
-
-            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, age, patches[patchRow][patchWidth]);
-
-            // turtles[i].setCurrLocation(patches[patchRow][patchWidth]);
+            
+            turtles[i] = initialiseTurtle(patches[patchRow][patchWidth]);
         }
 
         recolorTurtles(turtles);
+    }
+
+    public static Turtle initialiseTurtle(Patch patch ){
+
+        // generate random parameters.
+        int metabolism = Params.getRandomMetabolism();
+        int wealth = Params.getRandomWealth(metabolism);
+        int vision = Params.getRandomVision();
+        int lifeExpectancy = Params.getRandomLifeExpectancy();
+        int age = Params.getRandomAge(lifeExpectancy);
+        
+        System.out.print("turtle b i r t h e d");
+        return new Turtle(vision, wealth, lifeExpectancy, metabolism, age, patch);
+
     }
 
     // 1. Give all 8 neighbouring patches of patches with grain on them, 1/8th of 25% of the grain present on the initial patch,
@@ -250,7 +257,7 @@ public class Main {
             }
             harvest();
             for (Turtle t : turtles) {
-                moveEatAgeDie();
+                moveEatAgeDie(t);
             }
             recolorTurtles(turtles);
 
@@ -311,9 +318,40 @@ public class Main {
         return;
     }
 
-    public static void moveEatAgeDie() {
+    public static void moveEatAgeDie(Turtle t) {
+        // consume some grain according to metabolism
+        t.setWealth(t.getWealth() - t.getMetabolism());
+        System.out.print("turtle eat");
+
+        // grow older
+        t.setAge(t.getAge() + 1);
+        System.out.print("turtle age");
+
+        //   check for death conditions: if you have no grain or
+        //   you're older than the life expectancy or if some random factor
+        //   holds, then you "die" and are "reborn" (in fact, your variables
+        //   are just reset to new random values
+        if ((t.getWealth() < 0) || (t.getAge() >= t.getLifeExpectancy())){
+            System.out.print("turtle d e d");
+            t = initialiseTurtle(t.getCurrLocation());
+        }
+
         return;
     }
+
+// to move-eat-age-die  ;; turtle procedure
+//   fd 1
+//   ;; consume some grain according to metabolism
+//   set wealth (wealth - metabolism)
+//   ;; grow older
+//   set age (age + 1)
+//   ;; check for death conditions: if you have no grain or
+//   ;; you're older than the life expectancy or if some random factor
+//   ;; holds, then you "die" and are "reborn" (in fact, your variables
+//   ;; are just reset to new random values)
+//   if (wealth < 0) or (age >= life-expectancy)
+//     [ set-initial-turtle-vars ]
+// end
 
     public static void growGrain(Patch p) {
         return;

@@ -171,4 +171,21 @@ public class Turtle {
     public int getHeading() {
         return this.heading;
     }
+    
+    public int getMetabolism() {
+        return this.metabolism;
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getLifeExpectancy() {
+        return this.lifeExpectancy;
+    }
+
 }
