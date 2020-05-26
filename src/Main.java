@@ -34,6 +34,8 @@ public class Main {
 
         initialiseTurtles(turtles, patches);
 
+        runSimulation(patches, turtles);
+
         /*
         List<List<String>> rows = Arrays.asList(
             Arrays.asList("Jack", "Sailor", "0340138128"),
@@ -115,10 +117,10 @@ public class Main {
             int lifeExpectancy = Params.getRandomLifeExpectancy();
             int age = Params.getRandomAge(lifeExpectancy);
 
-            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, age, patches[patchRow][patchWidth]);
-
             int patchRow = Params.getRandomRow();
             int patchWidth = Params.getRandomCol();
+
+            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, age, patches[patchRow][patchWidth]);
 
             // turtles[i].setCurrLocation(patches[patchRow][patchWidth]);
         }
@@ -238,5 +240,86 @@ public class Main {
                 t.setColor('b');
             }
         }
+    }
+
+    public static void runSimulation(Patch[][] patches, Turtle[] turtles) {
+        int ticks = 0;
+        while (true) {
+            for (Turtle t : turtles) {
+                turnTowardsGrain(t);
+            }
+            harvest();
+            for (Turtle t : turtles) {
+                moveEatAgeDie();
+            }
+            recolorTurtles(turtles);
+
+            if (ticks % Params.GRAIN_GROWTH_INTERVAL == 0) {
+                for (Patch[] patchRow : patches) {
+                    for (Patch p : patchRow) {
+                        growGrain(p);
+                    }
+                }
+            }
+            updateLorenzAndGini();
+            ticks++;
+        }
+    }
+
+    // =========================================================================
+    // Method: To turn the Turtle towards the grain.
+    // =========================================================================
+    public static void turnTowardsGrain(Turtle t) {
+        t.setHeading(0);
+        int bestDirection = 0;
+        int bestAmount = grainAhead(t);
+
+        t.setHeading(90);
+        if (grainAhead(t) > bestAmount) {
+            bestDirection = 90;
+            bestAmount = grainAhead(t);
+        }
+
+        t.setHeading(180);
+        if (grainAhead(t) > bestAmount) {
+            bestDirection = 180;
+            bestAmount = grainAhead(t);
+        }
+
+        t.setHeading(270);
+        if (grainAhead(t) > bestAmount) {
+            bestDirection = 270;
+        }
+
+        t.setHeading(bestDirection);
+    }
+
+
+    // =========================================================================
+    // Method: To check the grains in the Patches ahead.
+    // =========================================================================
+    public static int grainAhead(Turtle t) {
+        int total = 0;
+        for (int i=0; i<t.getVision(); i++) {
+            // total increment with nextPatch
+            total = total + 1;
+        }
+        return total;
+    }
+
+    public static void harvest() {
+        return;
+    }
+
+    public static void moveEatAgeDie() {
+        return;
+    }
+
+    public static void growGrain(Patch p) {
+        return;
+    }
+
+    public static void updateLorenzAndGini() {
+        return;
     }
 }

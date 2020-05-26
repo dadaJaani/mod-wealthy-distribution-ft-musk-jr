@@ -90,52 +90,6 @@ public class Turtle {
         this.heading        = 0;
     }
 
- 
-
-    // =========================================================================
-    // Method: To turn the Turtle towards the grain. 
-    // =========================================================================
-    private void turnTowardsGrain () {
-        this.heading = 0;
-        int bestDirection = 0;
-        int bestAmount = grainAhead();
-        
-        this.heading = 90;
-        if (grainAhead() > bestAmount) {
-            bestDirection = this.heading;
-            bestAmount = grainAhead();
-        }
-
-        this.heading = 180;
-        if (grainAhead() > bestAmount) {
-            bestDirection = this.heading;
-            bestAmount = grainAhead();
-        }
-
-        this.heading = 270;
-        if (grainAhead() > bestAmount) {
-            bestDirection = this.heading;
-            bestAmount = grainAhead();
-        }
-
-        this.heading = bestDirection;
-    } 
-
-
-    // =========================================================================
-    // Method: To check the grains in the Patches ahead. 
-    // =========================================================================
-    private int grainAhead() {
-        int total = 0;
-        int howFar = 1;
-        for (int i=0; i<vision; i++) {
-            // total increment with nextPatch
-            total = total + patch.getGrainOfPatchAhead(this.heading, howFar);
-            howFar++;
-        }
-        return total;
-    }
-
     // =========================================================================
     // Method: To move to a new location.
     // (should this function live in the monitor, Field.java?)
@@ -200,5 +154,21 @@ public class Turtle {
 
     public char getColor() {
         return this.color;
+    }
+
+    public void setVision(int vision) {
+        this.vision = vision;
+    }
+
+    public int getVision() {
+        return this.vision;
+    }
+
+    public void setHeading(int heading) {
+        this.heading = heading;
+    }
+
+    public int getHeading() {
+        return this.heading;
     }
 }
