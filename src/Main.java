@@ -115,12 +115,12 @@ public class Main {
             int lifeExpectancy = Params.getRandomLifeExpectancy();
             int age = Params.getRandomAge(lifeExpectancy);
 
-            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, age);
+            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, age, patches[patchRow][patchWidth]);
 
             int patchRow = Params.getRandomRow();
             int patchWidth = Params.getRandomCol();
 
-            turtles[i].setCurrLocation(patches[patchRow][patchWidth]);
+            // turtles[i].setCurrLocation(patches[patchRow][patchWidth]);
         }
 
         recolorTurtles(turtles);

@@ -72,21 +72,68 @@ public class Turtle {
     // Class Properties
     // =========================================================================
     private Patch currLocation;
-    private int vision, currWealth, lifeExpectancy, age, metabolism;
+    private int vision, currWealth, lifeExpectancy, age, metabolism, heading;
     private char color;
     // =========================================================================
     // Constructor: Creates a new turtle for the given vision, currWealth, 
     // lifeExpectancy, and metabolism.
     // =========================================================================
-    Turtle(int vision, int currWealth, int lifeExpectancy, int metabolism, int age) {
+    Turtle(int vision, int currWealth, int lifeExpectancy, int metabolism, int age, Patch location) {
         // Initialising all the properties here.
-        this.currLocation   = null;
+        this.currLocation   = location;
         this.vision         = vision; 
         this.currWealth     = currWealth;
         this.lifeExpectancy = lifeExpectancy;
         this.age            = age;
         this.metabolism     = metabolism;
         this.color          = 'n';
+        this.heading        = 0;
+    }
+
+ 
+
+    // =========================================================================
+    // Method: To turn the Turtle towards the grain. 
+    // =========================================================================
+    private void turnTowardsGrain () {
+        this.heading = 0;
+        int bestDirection = 0;
+        int bestAmount = grainAhead();
+        
+        this.heading = 90;
+        if (grainAhead() > bestAmount) {
+            bestDirection = this.heading;
+            bestAmount = grainAhead();
+        }
+
+        this.heading = 180;
+        if (grainAhead() > bestAmount) {
+            bestDirection = this.heading;
+            bestAmount = grainAhead();
+        }
+
+        this.heading = 270;
+        if (grainAhead() > bestAmount) {
+            bestDirection = this.heading;
+            bestAmount = grainAhead();
+        }
+
+        this.heading = bestDirection;
+    } 
+
+
+    // =========================================================================
+    // Method: To check the grains in the Patches ahead. 
+    // =========================================================================
+    private int grainAhead() {
+        int total = 0;
+        int howFar = 1;
+        for (int i=0; i<vision; i++) {
+            // total increment with nextPatch
+            total = total + patch.getGrainOfPatchAhead(this.heading, howFar);
+            howFar++;
+        }
+        return total;
     }
 
     // =========================================================================
