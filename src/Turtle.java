@@ -67,18 +67,18 @@
  */
 
 
-public class Turtle extends Thread {
+public class Turtle {
     // =========================================================================
     // Class Properties
     // =========================================================================
     private Patch currLocation;
     private int vision, currWealth, lifeExpectancy, age, metabolism;
-    private Field field;
+    private char color;
     // =========================================================================
     // Constructor: Creates a new turtle for the given vision, currWealth, 
     // lifeExpectancy, and metabolism.
     // =========================================================================
-    Turtle(int vision, int currWealth, int lifeExpectancy, int metabolism, int age, Field field) {
+    Turtle(int vision, int currWealth, int lifeExpectancy, int metabolism, int age) {
         // Initialising all the properties here.
         this.currLocation   = null;
         this.vision         = vision; 
@@ -86,34 +86,7 @@ public class Turtle extends Thread {
         this.lifeExpectancy = lifeExpectancy;
         this.age            = age;
         this.metabolism     = metabolism;
-        this.field          = field;
-    }
-
-    // =========================================================================
-    // Method: To RUN the process.
-    // =========================================================================
-    public void run() {
-         
-
-        while (!isInterrupted()) {
-            try{
-                // Procedure 1: Move 
-                this.field.moveToLocation(this);
-    
-                // Procedure 2: Eat
-                this.field.harvest(this);
-    
-                // Procedure 3: Age 
-                this.age();
-    
-                // Procedure 4: Die
-                this.die();
-
-            } catch (InterruptedException e) {
-                this.interrupt();
-            }
-        
-    }
+        this.color          = 'n';
     }
 
     // =========================================================================
@@ -164,5 +137,21 @@ public class Turtle extends Thread {
 
     public Patch getCurrLocation() {
         return this.currLocation;
+    }
+
+    public void setWealth(int wealth) {
+        this.currWealth = wealth;
+    }
+
+    public int getWealth() {
+        return this.currWealth;
+    }
+
+    public void setColor(char color) {
+        this.color = color;
+    }
+
+    public char getColor() {
+        return this.color;
     }
 }

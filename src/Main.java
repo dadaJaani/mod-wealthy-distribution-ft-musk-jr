@@ -27,33 +27,12 @@ public class Main {
 
     public static void main(String [] args) throws InterruptedException {
 
-        Field field = new Field("field", Params.FIELD_HEIGHT, Params.FIELD_WIDTH);
-
         Patch[][] patches = new Patch[Params.FIELD_HEIGHT][Params.FIELD_WIDTH];
-
-        initialisePatches(patches, field);
-
         Turtle[] turtles = new Turtle[Params.NUM_TURTLES];
 
-        for (int i = 0; i < Params.NUM_TURTLES; i++) {
-            int metabolism = Params.getRandomMetabolism();
-            int wealth = Params.getRandomWealth(metabolism);
-            int vision = Params.getRandomVision();
-            int lifeExpectancy = Params.getRandomLifeExpectancy();
-            int age = Params.getRandomAge(lifeExpectancy);
+        initialisePatches(patches);
 
-            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, age, field);
-
-            int patchRow = Params.getRandomRow();
-            int patchWidth = Params.getRandomCol();
-
-            turtles[i].setCurrLocation(patches[patchRow][patchWidth]);
-            turtles[i].start();
-        }
-
-        for (int i = 0; i < Params.NUM_TURTLES; i++) {
-            turtles[i].join();
-        }
+        initialiseTurtles(turtles, patches);
 
         /*
         List<List<String>> rows = Arrays.asList(
@@ -88,7 +67,7 @@ public class Main {
         }
     }
 
-    public static void initialisePatches(Patch[][] patches, Field field) {
+    public static void initialisePatches(Patch[][] patches) {
         // Initialise patches to be empty with 0 maxGrain, unless they are 'rich'
         int maxGrain;
         int nGrain;
@@ -98,7 +77,7 @@ public class Main {
                 if (Params.getRandomPercentage() <= Params.PERCENT_BEST_LAND) {
                     maxGrain = nGrain = Params.MAX_GRAIN; // 'Rich' patches
                 }
-                patches[i][j] = new Patch(nGrain, maxGrain, field, i, j);
+                patches[i][j] = new Patch(nGrain, maxGrain, i, j);
             }
         }
 
@@ -125,6 +104,26 @@ public class Main {
                 printPatch(patches[row][col], row+1, col+1);
             }
         }
+    }
+
+    public static void initialiseTurtles(Turtle[] turtles, Patch[][] patches) {
+        for (int i = 0; i < Params.NUM_TURTLES; i++) {
+            int metabolism = Params.getRandomMetabolism();
+            int wealth = Params.getRandomWealth(metabolism);
+
+            int vision = Params.getRandomVision();
+            int lifeExpectancy = Params.getRandomLifeExpectancy();
+            int age = Params.getRandomAge(lifeExpectancy);
+
+            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, age);
+
+            int patchRow = Params.getRandomRow();
+            int patchWidth = Params.getRandomCol();
+
+            turtles[i].setCurrLocation(patches[patchRow][patchWidth]);
+        }
+
+        recolorTurtles(turtles);
     }
 
     // 1. Give all 8 neighbouring patches of patches with grain on them, 1/8th of 25% of the grain present on the initial patch,
@@ -217,5 +216,27 @@ public class Main {
                 "Curr Grain:\t\t%3.1f\nMax Grain:\t\t%3d\n\n", row, col,
                 p.getCurrGrain(), p.getMaxGrain());
         System.out.print(s);
+    }
+
+    public static void recolorTurtles(Turtle[] turtles) {
+        int topWealth = 0;
+        // Find out the maximum wealth any turtle has
+        for (Turtle t : turtles) {
+            if (t.getWealth() > topWealth) {
+                topWealth = t.getWealth();
+            }
+        }
+        // Calculate colors, we use doubles to ensure we don't get rounding problems
+        for (Turtle t : turtles) {
+            if (t.getWealth() <= topWealth/3.0) {
+                t.setColor('r');
+            }
+            else if (t.getWealth() <= topWealth*2.0/3.0) {
+                t.setColor('g');
+            }
+            else {
+                t.setColor('b');
+            }
+        }
     }
 }
