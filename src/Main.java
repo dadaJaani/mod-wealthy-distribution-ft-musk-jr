@@ -377,25 +377,13 @@ public class Main {
         return;
     }
 
-// to move-eat-age-die  ;; turtle procedure
-//   fd 1
-//   ;; consume some grain according to metabolism
-//   set wealth (wealth - metabolism)
-//   ;; grow older
-//   set age (age + 1)
-//   ;; check for death conditions: if you have no grain or
-//   ;; you're older than the life expectancy or if some random factor
-//   ;; holds, then you "die" and are "reborn" (in fact, your variables
-//   ;; are just reset to new random values)
-//   if (wealth < 0) or (age >= life-expectancy)
-//     [ set-initial-turtle-vars ]
-// end
-
     public static void growGrain(Patch p) {
         return;
     }
 
     public static void updateLorenzAndGini() {
+
+
         return;
     }
 }
