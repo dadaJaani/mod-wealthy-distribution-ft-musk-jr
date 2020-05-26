@@ -373,17 +373,15 @@ public class Main {
             System.out.print("turtle d e d");
             t = initialiseTurtle(t.getCurrLocation());
         }
-
         return;
     }
 
     public static void growGrain(Patch p) {
+        p.setCurrGrain((int) (p.getCurrGrain() + Params.NUM_GRAIN_GROWN));
         return;
     }
 
     public static void updateLorenzAndGini() {
-
-
         return;
     }
 }
