@@ -246,9 +246,9 @@ public class Main {
         int ticks = 0;
         while (true) {
             for (Turtle t : turtles) {
-                turnTowardsGrain(t);
+                turnTowardsGrain(t, patches);
             }
-            harvest();
+            harvest(turtles);
             for (Turtle t : turtles) {
                 moveEatAgeDie();
             }
@@ -269,25 +269,25 @@ public class Main {
     // =========================================================================
     // Method: To turn the Turtle towards the grain.
     // =========================================================================
-    public static void turnTowardsGrain(Turtle t) {
+    public static void turnTowardsGrain(Turtle t, Patch[][] patches) {
         t.setHeading(0);
         int bestDirection = 0;
-        int bestAmount = grainAhead(t);
+        int bestAmount = grainAhead(t, patches);
 
         t.setHeading(90);
-        if (grainAhead(t) > bestAmount) {
+        if (grainAhead(t, patches) > bestAmount) {
             bestDirection = 90;
-            bestAmount = grainAhead(t);
+            bestAmount = grainAhead(t, patches);
         }
 
         t.setHeading(180);
-        if (grainAhead(t) > bestAmount) {
+        if (grainAhead(t, patches) > bestAmount) {
             bestDirection = 180;
-            bestAmount = grainAhead(t);
+            bestAmount = grainAhead(t, patches);
         }
 
         t.setHeading(270);
-        if (grainAhead(t) > bestAmount) {
+        if (grainAhead(t, patches) > bestAmount) {
             bestDirection = 270;
         }
 
@@ -298,17 +298,55 @@ public class Main {
     // =========================================================================
     // Method: To check the grains in the Patches ahead.
     // =========================================================================
-    public static int grainAhead(Turtle t) {
-        int total = 0;
-        for (int i=0; i<t.getVision(); i++) {
-            // total increment with nextPatch
-            total = total + 1;
+    public static int grainAhead(Turtle t, Patch[][] patches) {
+        int tPatchRow = t.getCurrLocation().getRow();
+        int tPatchCol = t.getCurrLocation().getCol();
+        int tHeading = t.getHeading();
+        int grainTotal = 0;
+        for (int i = 0; i < t.getVision(); i++) {
+            switch (tHeading) {
+                case 0:
+                    tPatchCol--;
+                    break;
+                case 90:
+                    tPatchRow++;
+                    break;
+                case 180:
+                    tPatchCol++;
+                    break;
+                case 270:
+                    tPatchRow--;
+                    break;
+            }
+            if (tPatchCol < 0) {
+                tPatchCol = Params.FIELD_HEIGHT - 1;
+            }
+            if (tPatchCol == Params.FIELD_HEIGHT) {
+                tPatchCol = 0;
+            }
+            if (tPatchRow < 0) {
+                tPatchRow = Params.FIELD_WIDTH - 1;
+            }
+            if (tPatchRow == Params.FIELD_WIDTH) {
+                tPatchRow = 0;
+            }
+            grainTotal += patches[tPatchRow][tPatchCol].getCurrGrain();
         }
-        return total;
+        return grainTotal;
     }
 
-    public static void harvest() {
-        return;
+    public static void harvest(Turtle[] turtles) {
+        int newWealth;
+        Patch patch;
+        for (Turtle t : turtles) {
+            patch = t.getCurrLocation();
+            newWealth = (int) (t.getWealth() + (patch.getCurrGrain() / patch.getNTurtles()));
+            t.setWealth(newWealth);
+        }
+        for (Turtle t : turtles) {
+            patch = t.getCurrLocation();
+            patch.setCurrGrain(0);
+        }
     }
 
     public static void moveEatAgeDie() {
