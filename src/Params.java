@@ -68,6 +68,11 @@ class Params {
             (Math.random() * (MAX_LIFE_EXPECTANCY - MIN_LIFE_EXPECTANCY + 1)));
     }
 
+    // Generate a random age
+    static int getRandomAge(int lifeExpectancy) {
+        return (int) (Math.random() * lifeExpectancy);
+    }
+
     // Generate a random metabolism
     static int getRandomMetabolism() {
         return (int) (1 + (Math.random() * MAX_METABOLISM));

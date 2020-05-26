@@ -30,14 +30,13 @@
  *      1. run():
  *          This is the run method to run the process. It follows the procedure
  *          stated above.
- *
  *      2. grow():
  *          This public method removes the current Quest for the Knight.
  * 
  */
 
 
-public class Patch extends Thread {
+public class Patch {
     // =========================================================================
     // Class Properties
     // =========================================================================
@@ -55,23 +54,6 @@ public class Patch extends Thread {
         this.nGrain   = nGrain;
         this.maxGrain = maxGrain;
         this.field    = field; 
-    }
-
-    // =========================================================================
-    // Method: To RUN the process.
-    // =========================================================================
-    public void run() {
-        while (!isInterrupted()) {
-            // Procedure 1: Grow
-            this.grow();
-
-            // Procedure 2: Harvest
-            // do we need this method?
-            // i.e. shouldn't this be called by turtle? Yes
-
-        }
-        
-
     }
 
     // =========================================================================

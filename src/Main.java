@@ -28,33 +28,31 @@ public class Main {
     public static void main(String [] args) throws InterruptedException {
 
         Field field = new Field("field", Params.FIELD_HEIGHT, Params.FIELD_WIDTH);
-        Turtle[] turtles = new Turtle[Params.NUM_TURTLES];
-        
-        for (int i = 0; i < Params.NUM_TURTLES; i++) {
-            int metabolism = Params.getRandomMetabolism();
-            int wealth = Params.getRandomWealth(metabolism);
-            int vision = Params.getRandomVision();
-            int lifeExpectancy = Params.getRandomLifeExpectancy();
-            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, field);
-//            turtles[i].start();
-            
-            // 1. Move to a random starting patch
-            // 2. Randomly assign an age between 0 and life-expectancy
-        }
-        
 
         Patch[][] patches = new Patch[Params.FIELD_HEIGHT][Params.FIELD_WIDTH];
 
         initialisePatches(patches, field);
 
+        Turtle[] turtles = new Turtle[Params.NUM_TURTLES];
+
         for (int i = 0; i < Params.NUM_TURTLES; i++) {
-//            turtles[i].join();
+            int metabolism = Params.getRandomMetabolism();
+            int wealth = Params.getRandomWealth(metabolism);
+            int vision = Params.getRandomVision();
+            int lifeExpectancy = Params.getRandomLifeExpectancy();
+            int age = Params.getRandomAge(lifeExpectancy);
+
+            turtles[i] = new Turtle(vision, wealth, lifeExpectancy, metabolism, age, field);
+
+            int patchRow = Params.getRandomRow();
+            int patchWidth = Params.getRandomCol();
+
+            turtles[i].setCurrLocation(patches[patchRow][patchWidth]);
+            turtles[i].start();
         }
 
-        for (int i = 0; i < Params.FIELD_HEIGHT; i++) {
-            for (int j = 0; j < Params.FIELD_WIDTH; j++) {
-//                patches[i][j].join();
-            }
+        for (int i = 0; i < Params.NUM_TURTLES; i++) {
+            turtles[i].join();
         }
 
         /*
@@ -66,7 +64,6 @@ public class Main {
 
         createCSV("Name", "Occupation", "Phone Number", rows); 
         */
-
     }
 
     public static void createCSV(String heading1, String heading2, String heading3, List<List<String>> data) {
@@ -125,7 +122,6 @@ public class Main {
             for (int col = 0; col < Params.FIELD_WIDTH; col++) {
                 patches[row][col].setCurrGrain((int) patches[row][col].getCurrGrain());
                 patches[row][col].setMaxGrain((int) patches[row][col].getCurrGrain());
-//                patches[row][col].start();
                 printPatch(patches[row][col], row+1, col+1);
             }
         }

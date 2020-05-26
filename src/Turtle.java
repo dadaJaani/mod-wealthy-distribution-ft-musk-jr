@@ -78,13 +78,13 @@ public class Turtle extends Thread {
     // Constructor: Creates a new turtle for the given vision, currWealth, 
     // lifeExpectancy, and metabolism.
     // =========================================================================
-    Turtle(int vision, int currWealth, int lifeExpectancy, int metabolism, Field field) {
+    Turtle(int vision, int currWealth, int lifeExpectancy, int metabolism, int age, Field field) {
         // Initialising all the properties here.
         this.currLocation   = null;
         this.vision         = vision; 
         this.currWealth     = currWealth;
         this.lifeExpectancy = lifeExpectancy;
-        this.age            = 0;
+        this.age            = age;
         this.metabolism     = metabolism;
         this.field          = field;
     }
@@ -158,4 +158,11 @@ public class Turtle extends Thread {
         // https://stackoverflow.com/questions/2491588/how-a-thread-should-close-itself-in-java
     }
 
+    public void setCurrLocation(Patch patch) {
+        this.currLocation = patch;
+    }
+
+    public Patch getCurrLocation() {
+        return this.currLocation;
+    }
 }
