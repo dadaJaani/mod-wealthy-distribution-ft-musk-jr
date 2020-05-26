@@ -129,8 +129,7 @@ public class Main {
         int vision = Params.getRandomVision();
         int lifeExpectancy = Params.getRandomLifeExpectancy();
         int age = Params.getRandomAge(lifeExpectancy);
-        
-        System.out.print("turtle b i r t h e d");
+
         return new Turtle(vision, wealth, lifeExpectancy, metabolism, age, patch);
 
     }
@@ -227,6 +226,15 @@ public class Main {
         System.out.print(s);
     }
 
+    public static void printDistribution(Turtle[] turtles) {
+        String s;
+        for (Turtle t : turtles) {
+            s = String.format("%c", t.getColor());
+            System.out.print(s);
+        }
+        System.out.print("\n");
+    }
+
     public static void recolorTurtles(Turtle[] turtles) {
         int topWealth = 0;
         // Find out the maximum wealth any turtle has
@@ -251,7 +259,7 @@ public class Main {
 
     public static void runSimulation(Patch[][] patches, Turtle[] turtles) {
         int ticks = 0;
-        while (true) {
+        while (ticks < Params.N_TICKS) {
             for (Turtle t : turtles) {
                 turnTowardsGrain(t, patches);
             }
@@ -260,6 +268,7 @@ public class Main {
                 moveEatAgeDie(t);
             }
             recolorTurtles(turtles);
+            printDistribution(turtles);
 
             if (ticks % Params.GRAIN_GROWTH_INTERVAL == 0) {
                 for (Patch[] patchRow : patches) {
@@ -347,7 +356,7 @@ public class Main {
         Patch patch;
         for (Turtle t : turtles) {
             patch = t.getCurrLocation();
-            newWealth = (int) (t.getWealth() + (patch.getCurrGrain() / patch.getNTurtles()));
+            newWealth = (int) (t.getWealth() + (patch.getCurrGrain()));
             t.setWealth(newWealth);
         }
         for (Turtle t : turtles) {
@@ -359,18 +368,15 @@ public class Main {
     public static void moveEatAgeDie(Turtle t) {
         // consume some grain according to metabolism
         t.setWealth(t.getWealth() - t.getMetabolism());
-        System.out.print("turtle eat");
 
         // grow older
         t.setAge(t.getAge() + 1);
-        System.out.print("turtle age");
 
         //   check for death conditions: if you have no grain or
         //   you're older than the life expectancy or if some random factor
         //   holds, then you "die" and are "reborn" (in fact, your variables
         //   are just reset to new random values
-        if ((t.getWealth() < 0) || (t.getAge() >= t.getLifeExpectancy())){
-            System.out.print("turtle d e d");
+        if ((t.getWealth() < 0) || (t.getAge() >= t.getLifeExpectancy())) {
             t = initialiseTurtle(t.getCurrLocation());
         }
         return;
