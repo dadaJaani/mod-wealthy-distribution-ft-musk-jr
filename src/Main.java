@@ -98,7 +98,7 @@ public class Main {
                 if (Params.getRandomPercentage() <= Params.PERCENT_BEST_LAND) {
                     maxGrain = nGrain = Params.MAX_GRAIN; // 'Rich' patches
                 }
-                patches[i][j] = new Patch(nGrain, maxGrain, field);
+                patches[i][j] = new Patch(nGrain, maxGrain, field, i, j);
             }
         }
 
