@@ -17,6 +17,9 @@ class Params {
 	
     static Random rnd = new Random();
 
+    // Number of ticks in simulation
+    static final int N_TICKS = 200;
+
     // First diffusion round
     static final int N_FIRST_DIFFUSIONS = 5;
 
