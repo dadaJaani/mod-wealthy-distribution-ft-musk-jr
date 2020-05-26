@@ -257,7 +257,7 @@ public class Main {
             }
             harvest(turtles);
             for (Turtle t : turtles) {
-                moveEatAgeDie(t);
+                moveEatAgeDie(t, patches);
             }
             recolorTurtles(turtles);
 
@@ -268,7 +268,7 @@ public class Main {
                     }
                 }
             }
-            updateLorenzAndGini();
+            // updateLorenzAndGini();
             ticks++;
         }
     }
@@ -356,7 +356,47 @@ public class Main {
         }
     }
 
-    public static void moveEatAgeDie(Turtle t) {
+    public static void moveEatAgeDie(Turtle t, Patch[][] patches) {
+        // move turtle one step in the direction it's facing.
+        // todo: abstract this code to seperate function (it's ripped from 
+        // grainsAhead lmao)
+        int tPatchRow = t.getCurrLocation().getRow();
+        int tPatchCol = t.getCurrLocation().getCol();
+        int tHeading = t.getHeading();
+        switch (tHeading) {
+            case 0:
+                System.out.println("turtle go NORTH");
+                tPatchCol++;
+                break;
+            case 90:
+                System.out.println("turtle go EAST");
+                tPatchRow++;
+                break;
+            case 180:
+                System.out.println("turtle go SOUTH");
+                tPatchCol--;
+                break;
+            case 270:
+            System.out.println("turtle go (kanye) WEST");
+                tPatchRow--;
+                break;
+        }
+        if (tPatchCol < 0) {
+            tPatchCol = Params.FIELD_HEIGHT - 1;
+        }
+        if (tPatchCol == Params.FIELD_HEIGHT) {
+            tPatchCol = 0;
+        }
+        if (tPatchRow < 0) {
+            tPatchRow = Params.FIELD_WIDTH - 1;
+        }
+        if (tPatchRow == Params.FIELD_WIDTH) {
+            tPatchRow = 0;
+        }
+
+        // move turtle
+        t.setCurrLocation(patches[tPatchRow][tPatchCol]);
+
         // consume some grain according to metabolism
         t.setWealth(t.getWealth() - t.getMetabolism());
         System.out.print("turtle eat");
@@ -381,9 +421,36 @@ public class Main {
         return;
     }
 
-    public static void updateLorenzAndGini() {
+    // public static void updateLorenzAndGini() {
+    //     int totalWealth = 0;
 
+        
 
-        return;
-    }
+    //     int wealthSum = 0;
+    //     int giniIndex = 0;        
+    //     int i;
+        
+    //     return;
+    // }
+
+//   to update-lorenz-and-gini
+//   let sorted-wealths sort [wealth] of turtles
+//   let total-wealth sum sorted-wealths
+//   let wealth-sum-so-far 0
+//   let index 0
+//   set gini-index-reserve 0
+//   set lorenz-points []
+
+//   ;; now actually plot the Lorenz curve -- along the way, we also
+//   ;; calculate the Gini index.
+//   ;; (see the Info tab for a description of the curve and measure)
+//   repeat num-people [
+//     set wealth-sum-so-far (wealth-sum-so-far + item index sorted-wealths)
+//     set lorenz-points lput ((wealth-sum-so-far / total-wealth) * 100) lorenz-points
+//     set index (index + 1)
+//     set gini-index-reserve
+//       gini-index-reserve +
+//       (index / num-people) -
+//       (wealth-sum-so-far / total-wealth)
+//   ]
 }

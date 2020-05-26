@@ -41,6 +41,10 @@
  *      - field:
  *          This is a "Field" variable that represents the field the turtle is
  *          on.
+ *      - heading:
+ *          This is the turtle's bearing/orientation. Set to 0 if they face
+ *          north, 90 if facing east, 180 if facing south, and 270 if facing
+ *          west.
  *
  *  ============================================================================
  *  Detailed description of Methods:
