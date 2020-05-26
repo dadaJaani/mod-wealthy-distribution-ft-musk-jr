@@ -43,17 +43,20 @@ public class Patch {
     private double nGrain;
     private int maxGrain;
     private Field field;
+    private int row, height;
  
 
     // =========================================================================
     // Constructor: Creates a new patch for the given values for grain
     // and max grain.
     // =========================================================================
-    Patch (double nGrain, int maxGrain, Field field) {
+    Patch (double nGrain, int maxGrain, Field field, int row, int height) {
         // Initialising all the properties here.
         this.nGrain   = nGrain;
         this.maxGrain = maxGrain;
         this.field    = field; 
+        this.row      = row;
+        this.height   = height;
     }
 
     // =========================================================================
