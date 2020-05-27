@@ -263,7 +263,10 @@ public class Main {
             for (Turtle t : turtles) {
                 turnTowardsGrain(t, patches);
             }
-            harvest(turtles);
+            for (Turtle t : turtles) {
+                t.harvest();
+            }
+            // harvest(turtles);
             for (Turtle t : turtles) {
                 moveEatAgeDie(t, patches);
             }
@@ -273,7 +276,8 @@ public class Main {
             if (ticks % Params.GRAIN_GROWTH_INTERVAL == 0) {
                 for (Patch[] patchRow : patches) {
                     for (Patch p : patchRow) {
-                        growGrain(p);
+                        p.grow();
+                        // growGrain(p);
                     }
                 }
             }
@@ -351,19 +355,19 @@ public class Main {
         return grainTotal;
     }
 
-    public static void harvest(Turtle[] turtles) {
-        int newWealth;
-        Patch patch;
-        for (Turtle t : turtles) {
-            patch = t.getCurrLocation();
-            newWealth = (int) (t.getWealth() + (patch.getCurrGrain()));
-            t.setWealth(newWealth);
-        }
-        for (Turtle t : turtles) {
-            patch = t.getCurrLocation();
-            patch.setCurrGrain(0);
-        }
-    }
+    // public static void harvest(Turtle[] turtles) {
+    //     int newWealth;
+    //     Patch patch;
+    //     for (Turtle t : turtles) {
+    //         patch = t.getCurrLocation();
+    //         newWealth = (int) (t.getWealth() + (patch.getCurrGrain()));
+    //         t.setWealth(newWealth);
+    //     }
+    //     for (Turtle t : turtles) {
+    //         patch = t.getCurrLocation();
+    //         patch.setCurrGrain(0);
+    //     }
+    // }
 
     public static void moveEatAgeDie(Turtle t, Patch[][] patches) {
         // move turtle one step in the direction it's facing.
@@ -422,47 +426,7 @@ public class Main {
         return;
     }
 
-    public static void growGrain(Patch p) {
-        p.setCurrGrain((int) (p.getCurrGrain() + Params.NUM_GRAIN_GROWN));
-        return;
-    }
-
-<<<<<<< HEAD
-    // public static void updateLorenzAndGini() {
-    //     int totalWealth = 0;
-
-        
-
-    //     int wealthSum = 0;
-    //     int giniIndex = 0;        
-    //     int i;
-        
-    //     return;
-    // }
-
-//   to update-lorenz-and-gini
-//   let sorted-wealths sort [wealth] of turtles
-//   let total-wealth sum sorted-wealths
-//   let wealth-sum-so-far 0
-//   let index 0
-//   set gini-index-reserve 0
-//   set lorenz-points []
-
-//   ;; now actually plot the Lorenz curve -- along the way, we also
-//   ;; calculate the Gini index.
-//   ;; (see the Info tab for a description of the curve and measure)
-//   repeat num-people [
-//     set wealth-sum-so-far (wealth-sum-so-far + item index sorted-wealths)
-//     set lorenz-points lput ((wealth-sum-so-far / total-wealth) * 100) lorenz-points
-//     set index (index + 1)
-//     set gini-index-reserve
-//       gini-index-reserve +
-//       (index / num-people) -
-//       (wealth-sum-so-far / total-wealth)
-//   ]
-=======
     public static void updateLorenzAndGini() {
         return;
     }
->>>>>>> f93066ba4903e6a16b99832896f4d6dea35cc8a3
 }

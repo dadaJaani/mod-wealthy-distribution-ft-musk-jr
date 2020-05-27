@@ -95,20 +95,12 @@ public class Turtle {
     }
 
     // =========================================================================
-    // Method: To move to a new location.
-    // (should this function live in the monitor, Field.java?)
-    // =========================================================================
-    public void moveToLocation() { 
-        // I guess this updates the currLocation
-    }
-
-    // =========================================================================
     // Method: To harvest the currentPatch.
     // (should this function live in the monitor, Field.java?)
     // =========================================================================
     public void harvest() {
-        // Turtle harvests the currLocation?
-        // and then updates wealth
+        this.currWealth = this.currWealth + (int)(this.currLocation.getCurrGrain());
+        this.currLocation.harvest();
     }
 
     // =========================================================================

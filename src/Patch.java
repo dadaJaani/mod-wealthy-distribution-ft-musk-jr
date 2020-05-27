@@ -65,9 +65,8 @@ public class Patch {
     public void grow() {
         if (this.nGrain < this.maxGrain) {
             this.nGrain += Params.NUM_GRAIN_GROWN;
-            if (this.nGrain > this.maxGrain) {
-                this.nGrain = this.maxGrain;
-            }
+        } else {
+            this.nGrain = this.maxGrain;
         }
     }
 
