@@ -95,15 +95,6 @@ public class Turtle {
     }
 
     // =========================================================================
-    // Method: To harvest the currentPatch.
-    // (should this function live in the monitor, Field.java?)
-    // =========================================================================
-    public void harvest() {
-        this.currWealth = this.currWealth + (int)(this.currLocation.getCurrGrain());
-        this.currLocation.harvest();
-    }
-
-    // =========================================================================
     // Method: To age.
     // =========================================================================
     public void age() {
@@ -167,18 +158,24 @@ public class Turtle {
     public int getHeading() {
         return this.heading;
     }
+
+    public void setMetabolism(int metabolism) {
+        this.metabolism = metabolism;
+    }
     
     public int getMetabolism() {
         return this.metabolism;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public int getAge() {
         return this.age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+    public void setLifeExpectancy(int lifeExpectancy) { this.lifeExpectancy = lifeExpectancy; }
 
     public int getLifeExpectancy() {
         return this.lifeExpectancy;
