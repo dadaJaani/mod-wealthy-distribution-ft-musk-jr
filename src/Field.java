@@ -186,7 +186,7 @@ public class Field {
 
     public Patch getPatch(int row, int col) {
         // not sure if I exchanged row and col??
-        return this.patches[row][height];
+        return this.patches[row][col];
     }
 
     public Patch getRandomPatch() {
