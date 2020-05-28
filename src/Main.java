@@ -367,10 +367,10 @@ public class Main {
         // }
         Arrays.sort(sortedTurtles, (a, b) -> a.compare(b));
 
-        System.out.println(" AFTER SORTING ");
-        for (int i=0; i<sortedTurtles.length ; i++){
-            System.out.println("turtle " + i + ": " + sortedTurtles[i].getWealth());
-        }
+        // System.out.println(" AFTER SORTING ");
+        // for (int i=0; i<sortedTurtles.length ; i++){
+        //     System.out.println("turtle " + i + ": " + sortedTurtles[i].getWealth());
+        // }
 
         int totalWealth = 0;
         for (int i=0; i<sortedTurtles.length; i++){
@@ -383,13 +383,20 @@ public class Main {
         double giniIndexReserve = 0;
         ArrayList<Double> lorenzPoint = new ArrayList<Double>();
 
+        double giniIndex = 0;
+
         for (int i=0; i<sortedTurtles.length; i++) {
             wealthSumSoFar = wealthSumSoFar + sortedTurtles[index].getWealth();
             lorenzPoint.add(((double) wealthSumSoFar / totalWealth) * 100);
             index++;
-            giniIndexReserve =  ((double)index / sortedTurtles.length) - ((double) wealthSumSoFar / totalWealth);
+            giniIndexReserve = giniIndexReserve + ((double)index /(double)sortedTurtles.length) - ((double) wealthSumSoFar / (double)totalWealth);
         }
+        giniIndex = (giniIndexReserve / (double) sortedTurtles.length) / 0.5;
+
         System.out.println("giniIndexReserve: " + giniIndexReserve);
+        System.out.println("giniIndex: " + giniIndex);
+
+        
 
         return;
     }
