@@ -18,7 +18,7 @@ class Params {
     static Random rnd = new Random();
 
     // Number of ticks in simulation
-    static final int N_TICKS = 200;
+    static final int N_TICKS = 100;
 
     // First diffusion round
     static final int N_FIRST_DIFFUSIONS = 5;
@@ -48,7 +48,7 @@ class Params {
     static final int MIN_LIFE_EXPECTANCY = 1;
 
     // Maximum life expectancy of a turtle
-    static final int MAX_LIFE_EXPECTANCY = 83; 
+    static final int MAX_LIFE_EXPECTANCY = 30; 
 
     // The percentage of best land
     static final int PERCENT_BEST_LAND = 10;
