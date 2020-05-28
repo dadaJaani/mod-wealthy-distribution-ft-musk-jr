@@ -30,11 +30,7 @@ public class Main {
         Turtle[] turtles = new Turtle[Params.NUM_TURTLES];
         Field field = new Field(Params.FIELD_WIDTH, Params.FIELD_HEIGHT);
         initialiseTurtles(turtles, field);
-        // runSimulation(turtles, field);
-        updateLorenzAndGini(turtles);
-
-
-
+        runSimulation(turtles, field);
     }
 
     public static void initialiseTurtles(Turtle[] turtles, Field field) {
@@ -110,6 +106,7 @@ public class Main {
 
         
         List<List<String>> dataRows = new ArrayList<List<String>>();
+        List<List<String>> lorenzDataRows = new ArrayList<List<String>>();
         // Arrays.asList(
             // Arrays.asList("Jack", "Sailor", "0340138128"),
             // Arrays.asList("Bond", "Spy", "0467263982"),
@@ -135,10 +132,14 @@ public class Main {
             
             // dataRows.add(Arrays.asList("ticks", "Jack", "Sailor", "0340138128"));
             dataRows.add(trackColors(turtles, ticks));
+            
+            lorenzDataRows.add(updateLorenzAndGini(turtles, ticks));
+
             ticks++;
         }
 
         createCSV("colorPercentage.csv", "ticks", "red%", "green%", "blue%", dataRows); 
+        createCSVLorenz(lorenzDataRows); 
 
     }
 
@@ -180,6 +181,36 @@ public class Main {
             csvWriter.append(heading4);
             csvWriter.append("\n");
 
+            for (List<String> rowData : data) {
+                csvWriter.append(String.join(",", rowData));
+                csvWriter.append("\n");
+            }
+
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static void createCSVLorenz(List<List<String>> data) {
+        try {
+            FileWriter csvWriter = new FileWriter("lorenz.csv");
+            csvWriter.append("tick");
+            csvWriter.append(",");
+            csvWriter.append("bottom 20%");
+            csvWriter.append(",");
+            csvWriter.append("bottom 40%");
+            csvWriter.append(",");
+            csvWriter.append("bottom 60%");
+            csvWriter.append(",");
+            csvWriter.append("bottom 80%");
+            csvWriter.append(",");
+            csvWriter.append("bottom 100%");
+            csvWriter.append(",");
+            csvWriter.append("Gini");
+            csvWriter.append("\n");
+ 
             for (List<String> rowData : data) {
                 csvWriter.append(String.join(",", rowData));
                 csvWriter.append("\n");
@@ -337,30 +368,9 @@ public class Main {
         newPatch.setNTurtles(newPatch.getNTurtles() + 1);
 
     }
+ 
 
-//     to update-lorenz-and-gini
-//   let sorted-wealths sort [wealth] of turtles
-//   let total-wealth sum sorted-wealths
-//   let wealth-sum-so-far 0
-//   let index 0
-//   set gini-index-reserve 0
-//   set lorenz-points []
-
-//   ;; now actually plot the Lorenz curve -- along the way, we also
-//   ;; calculate the Gini index.
-//   ;; (see the Info tab for a description of the curve and measure)
-//   repeat num-people [
-//     set wealth-sum-so-far (wealth-sum-so-far + item index sorted-wealths)
-//     set lorenz-points lput ((wealth-sum-so-far / total-wealth) * 100) lorenz-points
-//     set index (index + 1)
-//     set 
-//       gini-index-reserve +
-//       (index / num-people) -
-//       (wealth-sum-so-far / total-wealth)
-//   ]
-// end
-
-    public static void updateLorenzAndGini(Turtle[] turtles) {
+    public static List<String> updateLorenzAndGini(Turtle[] turtles, int tick) {
         Turtle[] sortedTurtles = turtles;
         // for (int i=0; i<sortedTurtles.length ; i++){
         //     System.out.println("turtle " + i + ": " + sortedTurtles[i].getWealth());
@@ -379,25 +389,34 @@ public class Main {
         System.out.println("TOTAL WEALTH : " + totalWealth);
 
         int wealthSumSoFar = 0;
-        int index = 0;
+        // int index = 0;
         double giniIndexReserve = 0;
         ArrayList<Double> lorenzPoint = new ArrayList<Double>();
 
         double giniIndex = 0;
 
         for (int i=0; i<sortedTurtles.length; i++) {
-            wealthSumSoFar = wealthSumSoFar + sortedTurtles[index].getWealth();
+            wealthSumSoFar = wealthSumSoFar + sortedTurtles[i].getWealth();
             lorenzPoint.add(((double) wealthSumSoFar / totalWealth) * 100);
-            index++;
-            giniIndexReserve = giniIndexReserve + ((double)index /(double)sortedTurtles.length) - ((double) wealthSumSoFar / (double)totalWealth);
+            giniIndexReserve = giniIndexReserve + ((double)i/(double)sortedTurtles.length) - ((double) wealthSumSoFar / (double)totalWealth);
+            System.out.println("lorenzPoint: " + lorenzPoint.get(i));
+
         }
         giniIndex = (giniIndexReserve / (double) sortedTurtles.length) / 0.5;
 
         System.out.println("giniIndexReserve: " + giniIndexReserve);
         System.out.println("giniIndex: " + giniIndex);
 
-        
+        double first20 = lorenzPoint.get((int)((lorenzPoint.size()-1)*0.2));
+        double first40 = lorenzPoint.get((int)((lorenzPoint.size()-1)*0.4));
+        double first60 = lorenzPoint.get((int)((lorenzPoint.size()-1)*0.6));
+        double first80 = lorenzPoint.get((int)((lorenzPoint.size()-1)*0.8));
+        double first100 = lorenzPoint.get((int)((lorenzPoint.size()-1)*1));
 
-        return;
+        DecimalFormat df = new DecimalFormat("#.00");
+
+
+        return Arrays.asList(String.valueOf(tick), String.valueOf(df.format(first20)), String.valueOf(df.format(first40)), String.valueOf(df.format(first60)), String.valueOf(df.format(first80)), String.valueOf(df.format(first100)), String.valueOf(df.format(giniIndex)));
     }
+ 
 }
