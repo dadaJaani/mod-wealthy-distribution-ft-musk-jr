@@ -70,6 +70,31 @@ public class Main {
         t.setAge(age);
     }
 
+    public static void updateTurtleLocation(Turtle t, Field field) {
+        // Randomly chosen Patch in whole grid
+        if (Params.N_LOC_GRID == -1) {
+            Patch currPatch = t.getCurrLocation();
+            currPatch.setNTurtles(currPatch.getNTurtles() - 1);
+
+            Patch newPatch = field.getRandomPatch();
+            t.setCurrLocation(newPatch);
+            newPatch.setNTurtles(newPatch.getNTurtles() + 1);
+        }
+        else {
+            Patch currPatch = t.getCurrLocation();
+            currPatch.setNTurtles(currPatch.getNTurtles() - 1);
+
+            int currRow = currPatch.getRow();
+            int currCol = currPatch.getCol();
+            int newRow = Params.getRandomNewRow(currRow);
+            int newCol = Params.getRandomNewCol(currCol);
+
+            Patch newPatch = field.getPatch(newRow, newCol);
+            t.setCurrLocation(field.getPatch(newRow, newCol));
+            newPatch.setNTurtles(newPatch.getNTurtles() + 1);
+        }
+    }
+
     public static void printDistribution(Turtle[] turtles) {
         String s;
         for (Turtle t : turtles) {
@@ -128,9 +153,7 @@ public class Main {
             if (ticks % Params.GRAIN_GROWTH_INTERVAL == 0) {
                 field.growPatches();
             }
-            // updateLorenzAndGini();
-            
-            // dataRows.add(Arrays.asList("ticks", "Jack", "Sailor", "0340138128"));
+
             dataRows.add(trackColors(turtles, ticks));
             
             lorenzDataRows.add(updateLorenzAndGini(turtles, ticks));
@@ -148,14 +171,14 @@ public class Main {
         int green = 0;
         int blue = 0;
         // Count the number of r, g and b.
-        for (int i=0; i<turtles.length; i++) {
-            if(turtles[i].getColor() == 'r'){
+        for (Turtle turtle : turtles) {
+            if (turtle.getColor() == 'r') {
                 red++;
             }
-            if(turtles[i].getColor() == 'g'){
+            if (turtle.getColor() == 'g') {
                 green++;
             }
-            if(turtles[i].getColor() == 'b'){
+            if (turtle.getColor() == 'b') {
                 blue++;
             }
         }
@@ -188,7 +211,7 @@ public class Main {
 
             csvWriter.flush();
             csvWriter.close();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -218,7 +241,7 @@ public class Main {
 
             csvWriter.flush();
             csvWriter.close();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }
@@ -262,18 +285,10 @@ public class Main {
         int grainTotal = 0;
         for (int i = 0; i < t.getVision(); i++) {
             switch (tHeading) {
-                case 0:
-                    tPatchCol--;
-                    break;
-                case 90:
-                    tPatchRow++;
-                    break;
-                case 180:
-                    tPatchCol++;
-                    break;
-                case 270:
-                    tPatchRow--;
-                    break;
+                case 0 -> tPatchCol--;
+                case 90 -> tPatchRow++;
+                case 180 -> tPatchCol++;
+                case 270 -> tPatchRow--;
             }
             if (tPatchCol < 0) {
                 tPatchCol = Params.FIELD_HEIGHT - 1;
@@ -321,8 +336,8 @@ public class Main {
         //   are just reset to new random values
         if ((t.getWealth() < 0) || (t.getAge() >= t.getLifeExpectancy())) {
             updateTurtle(t);
+            updateTurtleLocation(t, field);
         }
-        return;
     }
 
     public static void moveTurtle(Turtle t, Field field) {
@@ -371,52 +386,42 @@ public class Main {
  
 
     public static List<String> updateLorenzAndGini(Turtle[] turtles, int tick) {
-        Turtle[] sortedTurtles = turtles;
-        // for (int i=0; i<sortedTurtles.length ; i++){
-        //     System.out.println("turtle " + i + ": " + sortedTurtles[i].getWealth());
-        // }
-        Arrays.sort(sortedTurtles, (a, b) -> a.compare(b));
+        Turtle[] sortedTurtles = turtles.clone();
 
-        // System.out.println(" AFTER SORTING ");
-        // for (int i=0; i<sortedTurtles.length ; i++){
-        //     System.out.println("turtle " + i + ": " + sortedTurtles[i].getWealth());
-        // }
+        Arrays.sort(sortedTurtles, Turtle::compare);
 
         int totalWealth = 0;
-        for (int i=0; i<sortedTurtles.length; i++){
-            totalWealth += sortedTurtles[i].getWealth();
+        for (Turtle sortedTurtle : sortedTurtles) {
+            totalWealth += sortedTurtle.getWealth();
         }
-        System.out.println("TOTAL WEALTH : " + totalWealth);
 
         int wealthSumSoFar = 0;
-        // int index = 0;
         double giniIndexReserve = 0;
-        ArrayList<Double> lorenzPoint = new ArrayList<Double>();
+        ArrayList<Double> lorenzPoint = new ArrayList<>();
 
-        double giniIndex = 0;
+        double giniIndex;
 
         for (int i=0; i<sortedTurtles.length; i++) {
             wealthSumSoFar = wealthSumSoFar + sortedTurtles[i].getWealth();
             lorenzPoint.add(((double) wealthSumSoFar / totalWealth) * 100);
             giniIndexReserve = giniIndexReserve + ((double)i/(double)sortedTurtles.length) - ((double) wealthSumSoFar / (double)totalWealth);
-            System.out.println("lorenzPoint: " + lorenzPoint.get(i));
-
         }
         giniIndex = (giniIndexReserve / (double) sortedTurtles.length) / 0.5;
-
-        System.out.println("giniIndexReserve: " + giniIndexReserve);
-        System.out.println("giniIndex: " + giniIndex);
+        System.out.println(giniIndex);
 
         double first20 = lorenzPoint.get((int)((lorenzPoint.size()-1)*0.2));
         double first40 = lorenzPoint.get((int)((lorenzPoint.size()-1)*0.4));
         double first60 = lorenzPoint.get((int)((lorenzPoint.size()-1)*0.6));
         double first80 = lorenzPoint.get((int)((lorenzPoint.size()-1)*0.8));
-        double first100 = lorenzPoint.get((int)((lorenzPoint.size()-1)*1));
+        double first100 = lorenzPoint.get(((lorenzPoint.size() - 1)));
 
         DecimalFormat df = new DecimalFormat("#.00");
 
 
-        return Arrays.asList(String.valueOf(tick), String.valueOf(df.format(first20)), String.valueOf(df.format(first40)), String.valueOf(df.format(first60)), String.valueOf(df.format(first80)), String.valueOf(df.format(first100)), String.valueOf(df.format(giniIndex)));
+        return Arrays.asList(String.valueOf(tick), String.valueOf(df.format(first20)),
+                String.valueOf(df.format(first40)), String.valueOf(df.format(first60)),
+                String.valueOf(df.format(first80)), String.valueOf(df.format(first100)),
+                String.valueOf(df.format(giniIndex)));
     }
  
 }
