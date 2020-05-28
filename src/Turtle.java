@@ -76,8 +76,9 @@ public class Turtle {
     // Class Properties
     // =========================================================================
     private Patch currLocation;
-    private int vision, currWealth, lifeExpectancy, age, metabolism, heading;
+    private int vision, lifeExpectancy, age, metabolism, heading;
     private char color;
+    int currWealth;
     // =========================================================================
     // Constructor: Creates a new turtle for the given vision, currWealth, 
     // lifeExpectancy, and metabolism.
@@ -180,5 +181,9 @@ public class Turtle {
     public int getLifeExpectancy() {
         return this.lifeExpectancy;
     }
+
+    public int compare( Turtle t) { 
+        return this.currWealth - t.getWealth(); 
+    } 
 
 }

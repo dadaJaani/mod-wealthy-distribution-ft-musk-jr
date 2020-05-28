@@ -30,7 +30,11 @@ public class Main {
         Turtle[] turtles = new Turtle[Params.NUM_TURTLES];
         Field field = new Field(Params.FIELD_WIDTH, Params.FIELD_HEIGHT);
         initialiseTurtles(turtles, field);
-        runSimulation(turtles, field);
+        // runSimulation(turtles, field);
+        updateLorenzAndGini(turtles);
+
+
+
     }
 
     public static void initialiseTurtles(Turtle[] turtles, Field field) {
@@ -334,7 +338,59 @@ public class Main {
 
     }
 
-    public static void updateLorenzAndGini() {
+//     to update-lorenz-and-gini
+//   let sorted-wealths sort [wealth] of turtles
+//   let total-wealth sum sorted-wealths
+//   let wealth-sum-so-far 0
+//   let index 0
+//   set gini-index-reserve 0
+//   set lorenz-points []
+
+//   ;; now actually plot the Lorenz curve -- along the way, we also
+//   ;; calculate the Gini index.
+//   ;; (see the Info tab for a description of the curve and measure)
+//   repeat num-people [
+//     set wealth-sum-so-far (wealth-sum-so-far + item index sorted-wealths)
+//     set lorenz-points lput ((wealth-sum-so-far / total-wealth) * 100) lorenz-points
+//     set index (index + 1)
+//     set 
+//       gini-index-reserve +
+//       (index / num-people) -
+//       (wealth-sum-so-far / total-wealth)
+//   ]
+// end
+
+    public static void updateLorenzAndGini(Turtle[] turtles) {
+        Turtle[] sortedTurtles = turtles;
+        // for (int i=0; i<sortedTurtles.length ; i++){
+        //     System.out.println("turtle " + i + ": " + sortedTurtles[i].getWealth());
+        // }
+        Arrays.sort(sortedTurtles, (a, b) -> a.compare(b));
+
+        System.out.println(" AFTER SORTING ");
+        for (int i=0; i<sortedTurtles.length ; i++){
+            System.out.println("turtle " + i + ": " + sortedTurtles[i].getWealth());
+        }
+
+        int totalWealth = 0;
+        for (int i=0; i<sortedTurtles.length; i++){
+            totalWealth += sortedTurtles[i].getWealth();
+        }
+        System.out.println("TOTAL WEALTH : " + totalWealth);
+
+        int wealthSumSoFar = 0;
+        int index = 0;
+        double giniIndexReserve = 0;
+        ArrayList<Double> lorenzPoint = new ArrayList<Double>();
+
+        for (int i=0; i<sortedTurtles.length; i++) {
+            wealthSumSoFar = wealthSumSoFar + sortedTurtles[index].getWealth();
+            lorenzPoint.add(((double) wealthSumSoFar / totalWealth) * 100);
+            index++;
+            giniIndexReserve =  ((double)index / sortedTurtles.length) - ((double) wealthSumSoFar / totalWealth);
+        }
+        System.out.println("giniIndexReserve: " + giniIndexReserve);
+
         return;
     }
 }
