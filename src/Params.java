@@ -20,6 +20,10 @@ class Params {
     // Number of ticks in simulation
     static final int N_TICKS = 100;
 
+    // The vision for choosing new patch in N, NE, NW .. directions
+    // Set to 0 for original model implementation
+    static final int N_LOC_GRID = -1;
+
     // First diffusion round
     static final int N_FIRST_DIFFUSIONS = 5;
 
@@ -39,16 +43,16 @@ class Params {
     static final int NUM_TURTLES = 250;
 
     // The distance a turtle can see when looking for grain
-    static final int MAX_VISION = 5;
+    static final int MAX_VISION = 1;
 
     // The maximum metabolism for a turtle
-    static final int MAX_METABOLISM = 15;
+    static final int MAX_METABOLISM = 1;
 
     // The minimum life expectancy of a turtle
     static final int MIN_LIFE_EXPECTANCY = 1;
 
     // Maximum life expectancy of a turtle
-    static final int MAX_LIFE_EXPECTANCY = 30; 
+    static final int MAX_LIFE_EXPECTANCY = 30;
 
     // The percentage of best land
     static final int PERCENT_BEST_LAND = 10;
@@ -68,7 +72,8 @@ class Params {
     // Generate a random life expectancy
     static int getRandomLifeExpectancy() {
         return (int) (MIN_LIFE_EXPECTANCY + 
-            (Math.random() * (MAX_LIFE_EXPECTANCY - MIN_LIFE_EXPECTANCY + 1)));
+            (Math.random() *
+                    (MAX_LIFE_EXPECTANCY - MIN_LIFE_EXPECTANCY + 1)));
     }
 
     // Generate a random age
@@ -96,7 +101,34 @@ class Params {
         return (int) (1 + (Math.random() * 100.0));
     }
 
-    static int getRandomRow() { return (int) (Math.random() * FIELD_WIDTH); }
+    static int getRandomRow() {
+        return (int) (Math.random() * FIELD_HEIGHT);
+    }
 
-    static int getRandomCol() { return (int) (Math.random() * FIELD_HEIGHT); }
+    static int getRandomNewRow(int oldRow) {
+        int newRow = (int) (oldRow-N_LOC_GRID + (Math.random() * (2 * N_LOC_GRID + 1)));
+        if (newRow < 0) {
+            newRow += FIELD_HEIGHT;
+        }
+        if (newRow >= FIELD_HEIGHT) {
+            newRow -= FIELD_HEIGHT;
+        }
+        return newRow;
+    }
+
+    static int getRandomCol() {
+        return (int) (Math.random() * FIELD_WIDTH);
+    }
+
+    static int getRandomNewCol(int oldCol) {
+        int newCol = (int) (oldCol-N_LOC_GRID + (Math.random() * (2 * N_LOC_GRID + 1)));
+        if (newCol < 0) {
+            newCol += FIELD_HEIGHT;
+        }
+        if (newCol >= FIELD_HEIGHT) {
+            newCol -= FIELD_HEIGHT;
+        }
+        return newCol;
+    }
 }
+
