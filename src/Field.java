@@ -2,7 +2,6 @@
  *  Field.java
  *
  *  This is the Field class that represents the Field in the simulator.
- *  It is a PROCESS as it extends Thread.
  *
  *  ============================================================================
  *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne

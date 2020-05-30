@@ -2,7 +2,6 @@
  *  Turtle.java
  *
  *  This is the Turtle class that represents a Turtle in the simulator.
- *  It is a PROCESS as it extends Thread.
  *
  *  ============================================================================
  *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
@@ -35,9 +34,6 @@
  *      - metabolism:
  *          This is a "int" variable that holds the metabolism rate for the 
  *          Turtle.
- *      - ticksToNextEat:
- *          This is a "int" variable that holds the number of ticks remaining 
- *          until the Turtle can eat again.
  *      - field:
  *          This is a "Field" variable that represents the field the turtle is
  *          on. 

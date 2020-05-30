@@ -2,7 +2,6 @@
  *  Patch.java
  *
  *  This is the Patch class that represents a Patch in the simulator.
- *  It is a PROCESS as it extends Thread.
  *
  *  ============================================================================
  *  @authorName     : Waqas Rehmani, Angus Hudson, Jonathan Dunne
