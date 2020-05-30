@@ -9,10 +9,6 @@
  *  @studentNumber  : 1035514, 835808, 836748
  *  ============================================================================
  *
- *  A Patch has the following procedures:
- *      1. Grow.
- *      2. Die??
- *
  *  ============================================================================
  *  Description of the object properties:
  *  ============================================================================
@@ -22,17 +18,23 @@
  *      - maxGrain:
  *          This is an "int" variable that holds the max number of grains the
  *          Patch can hold.
+ *      - row, col:
+ *          These are "int" variables that holds the position of the Patch in 
+ *          the Field.
+ *       - nTurtles:
+ *          This is an "int" variable that holds the number of turtles on the
+ *          Patch.
  *
  *  ============================================================================
  *  Detailed description of Methods:
  *  ============================================================================
  *  This class has two methods:
- *      1. run():
- *          This is the run method to run the process. It follows the procedure
- *          stated above.
- *      2. grow():
- *          This public method removes the current Quest for the Knight.
+ *      1. grow():
+ *          Replenish the amount of grain on the patch.
+ *      2. harvest():
+ *           The patch is harvested by a turtle.
  * 
+ *  This class has getters and setter methods.
  */
 
 

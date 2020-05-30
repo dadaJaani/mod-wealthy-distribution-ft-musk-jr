@@ -12,13 +12,27 @@
  *  ============================================================================
  *  Description of the object properties:
  *  ============================================================================
- *
+ *      - width: 
+ *          This is an "int" variable that holds the 'width' of the Field.
+ *      - height:
+ *          This is an "int" variable that holds the 'height' of the Field.
+ *      - patches:
+ *          This is an Patch[][] variable that holds the grid of patches.
  *
  *  ============================================================================
  *  Detailed description of Methods:
  *  ============================================================================
- *      
- * 
+ *  This class has one method:
+ *      1. initialisePatches():
+ *          To initialise Patches.
+ *      2. diffusePatches():
+ *          To diffuse the Patches.
+ *      3. fillRichPatches():
+ *          To fill the rich Patches.
+ *      4. growPatches():
+ *          To grow Patches. 
+ *
+ *  Then we also have getters and setter methods.
  */
 
 
@@ -28,11 +42,11 @@ public class Field {
     // =========================================================================
     private int width, height;
     Patch[][] patches;
-
-    // =========================================================================
+ 
+    // ------------------------------------------------------------------------
     // Constructor: Creates a new patch for the given values for grain
     // and max grain.
-    // =========================================================================
+    // ------------------------------------------------------------------------
     Field (int width, int height) {
         // Initialising all the properties here.
         this.width  = width;
@@ -40,10 +54,10 @@ public class Field {
         this.patches = new Patch[Params.FIELD_HEIGHT][Params.FIELD_WIDTH];
         initialisePatches();
     }
-
-    // =========================================================================
-    // Method: Replenish the amount of grain on the patch
-    // =========================================================================
+ 
+    // ------------------------------------------------------------------------
+    // Method: 
+    // ------------------------------------------------------------------------
     private void initialisePatches() {
         // Initialise patches to be empty with 0 maxin, unless they are 'rich'
         int maxGrain;
@@ -58,34 +72,28 @@ public class Field {
             }
         }
 
-        printGrain(this.patches);
+        
 
         for (int i = 0; i < Params.N_FIRST_DIFFUSIONS; i++) {
-            printIterationHeader(i+1);
             fillRichPatches();
-            printGrain(this.patches);
             diffusePatches();
-            printGrain(this.patches);
         }
 
         for (int i = 0; i < Params.N_SECOND_DIFFUSIONS; i++) {
-            printIterationHeader(Params.N_FIRST_DIFFUSIONS + i + 1);
             diffusePatches();
-            printGrain(this.patches);
         }
 
         for (int row = 0; row < Params.FIELD_HEIGHT; row++) {
             for (int col = 0; col < Params.FIELD_WIDTH; col++) {
                 this.patches[row][col].setCurrGrain((int) this.patches[row][col].getCurrGrain());
                 this.patches[row][col].setMaxGrain((int) this.patches[row][col].getCurrGrain());
-                printPatch(this.patches[row][col], row+1, col+1);
             }
         }
     }
 
-    // =========================================================================
-    // Method: The diffusion of patches.
-    // =========================================================================
+    // ------------------------------------------------------------------------
+    // Method: To diffuse the patches.
+    // ------------------------------------------------------------------------
     public void diffusePatches() {
         // We use a separate grid so the patches aren't updated until ALL have been processed for diffusion
         double[][] transitionGrid = new double[Params.FIELD_HEIGHT][Params.FIELD_WIDTH];
@@ -134,6 +142,9 @@ public class Field {
         }
     }
 
+    // ------------------------------------------------------------------------
+    // Method: To fill the rich patches.
+    // ------------------------------------------------------------------------
     public void fillRichPatches() {
         for (int row = 0; row < Params.FIELD_WIDTH; row++) {
             for (int col = 0; col < Params.FIELD_HEIGHT; col++) {
@@ -144,34 +155,9 @@ public class Field {
         }
     }
 
-    public void printGrain(Patch[][] patches) {
-        String s;
-        for (int row = 0; row < Params.FIELD_HEIGHT; row++) {
-            for (int col = 0; col < Params.FIELD_WIDTH; col++) {
-                s = String.format("%5.2f ", patches[row][col].getCurrGrain());
-                System.out.print(s);
-                if (col == Params.FIELD_WIDTH-1) {
-                    System.out.print("\n");
-                }
-            }
-        }
-        System.out.print("\n");
-    }
-
-    public void printIterationHeader(int x) {
-        String s;
-        s = String.format("=== ITERATION %d ===\n\n", x);
-        System.out.print(s);
-    }
-
-    public void printPatch(Patch p, int row, int col) {
-        String s;
-        s = String.format("PATCH Row: %2d Col: %2d\n" +
-                "Curr Grain:\t\t%3.1f\nMax Grain:\t\t%3d\n\n", row, col,
-                p.getCurrGrain(), p.getMaxGrain());
-        System.out.print(s);
-    }
-
+    // ------------------------------------------------------------------------
+    // Method: To grow the patches.
+    // ------------------------------------------------------------------------
     public void growPatches() {
         for (Patch[] patchRow : this.patches) {
             for (Patch p : patchRow) {
@@ -183,7 +169,6 @@ public class Field {
     // =========================================================================
     // Getters and Setters
     // =========================================================================
-
     public Patch getPatch(int row, int col) {
         // not sure if I exchanged row and col??
         return this.patches[row][col];

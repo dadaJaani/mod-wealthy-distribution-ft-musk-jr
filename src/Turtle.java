@@ -40,33 +40,12 @@
  *          until the Turtle can eat again.
  *      - field:
  *          This is a "Field" variable that represents the field the turtle is
- *          on.
- *      - heading:
- *          This is the turtle's bearing/orientation. Set to 0 if they face
- *          north, 90 if facing east, 180 if facing south, and 270 if facing
- *          west.
+ *          on. 
  *
  *  ============================================================================
  *  Detailed description of Methods:
  *  ============================================================================
- *  This class has seven methods:
- *      1. run():
- *          This is the run method to run the process. It follows the procedure
- *          stated above.
- *
- *      2. moveToLocation():
- *          This public method removes the current Quest for the Knight.
- *
- *      3. harvest(Patch):
- *          This is a public get method to access the Knight's Quest.
- *          (could implement harvest(location) instead?)
- * 
- *      4. produceOffspring():
- *          This public method is used to check if the Knight has acquired a new
- *          Quest the current Quest for the Knight.
- *
- *      5. die(Quest newQuest):
- *          This public method is used to assign a Quest to the Knight.
+ *  This class has getters and setter methods.
  *
  */
 
@@ -93,31 +72,6 @@ public class Turtle {
         this.metabolism     = metabolism;
         this.color          = 'n';
         this.heading        = 0;
-    }
-
-    // =========================================================================
-    // Method: To age.
-    // =========================================================================
-    public void age() {
-        this.age++;
-    }
-
-    // =========================================================================
-    // Method: To produceOffspring.
-    // =========================================================================
-    public void produceOffspring() { //This must return Turtle. Kept it to void for now for compilation.
-        // Hmmmm
-        // Big hmmmmmmmmmmm
-    }
-
-    // =========================================================================
-    // Method: To die.
-    // =========================================================================
-    public void die() {
-        // how to die?
-
-        // could use a flag as described here, named "alive" or sth:
-        // https://stackoverflow.com/questions/2491588/how-a-thread-should-close-itself-in-java
     }
 
     public void setCurrLocation(Patch patch) {
